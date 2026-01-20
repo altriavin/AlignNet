@@ -1,8 +1,14 @@
 # AlignNet
 
-## AlignNet: Enhancing Protein-Ligand Binding Affinity Prediction through Hierarchical Multi-modal Alignment
+## AlignNet: Enhancing Protein–Ligand Binding Affinity Prediction through Hierarchical Multi-modal Alignment
 
-This repository provides the official implementation of **AlignNet**, including data processing scripts and a demonstration for training and testing our model.
+This repository provides the official implementation of **AlignNet**, including:
+
+- Data preprocessing scripts (from raw protein/ligand files to embeddings & graphs)
+- A **toy_example** for quickly verifying the full pipeline
+- Scripts that can preprocess **the full dataset (all files)** (limited by processed data size, please run locally)
+- Training & inference code for AlignNet
+- Pretrained checkpoints for reproducing results
 
 ---
 
@@ -10,19 +16,22 @@ This repository provides the official implementation of **AlignNet**, including 
 
 - [Installation](#installation)
 - [Dataset Preparation](#dataset-preparation)
-- [Complete Workflow](#complete-workflow)
-  - [Step 1: Generate Pre-trained Embeddings](#step-1-generate-pre-trained-embeddings)
-  - [Step 2: Intra-modal Alignment Training](#step-2-intra-modal-alignment-training)
-  - [Step 3: Full Model Training](#step-3-full-model-training)
-  - [Step 4: Prediction](#step-4-prediction)
-- [Training & Prediction on Your Own Data](#training--prediction-on-your-own-data)
+  - [1. Download Raw Data](#1-download-raw-data)
+  - [2. Generate Pre-trained Embeddings & Graphs](#2-generate-pre-trained-embeddings--graphs)
+  - [Resource Notes](#resource-notes)
+- [Pretrained Checkpoints (Reproducing Results)](#pretrained-checkpoints-reproducing-results)
+- [Training & Inference](#training--inference)
+  - [Step 1: Intra-modal Alignment Training](#step-1-intra-modal-alignment-training)
+  - [Step 2: Full Model Training](#step-2-full-model-training)
+  - [Step 3: Prediction](#step-3-prediction)
+- [Training on Your Own Data](#training-on-your-own-data)
 - [Contact](#contact)
 
 ---
 
 ## Installation
 
-Set up the conda environment using the provided file:
+Create and activate the conda environment:
 
 ```bash
 conda env create -f AlignNet.yaml
@@ -33,74 +42,124 @@ conda activate AlignNet
 
 ## Dataset Preparation
 
-Due to file size constraints, this repository includes a small **toy_example** to demonstrate the complete workflow.
-The full datasets used in our paper (e.g., **PDBbind**) can be downloaded from their respective official websites. We provide data processing scripts to process the raw data. After our paper is accepted, we will provide all processed datasets used in our work for download.
+Due to the **large size of processed features**, this repository does **not** directly host the full processed dataset.  
+Instead, we provide:
 
-The toy example is located in the `toy_example/` directory and is pre-configured to work with the provided scripts.
+1. **Raw/original data**
+2. A complete preprocessing pipeline that can generate **all required features for the full dataset**
+3. A small **toy_example** to demonstrate the entire workflow end-to-end
 
----
+### 1. Download Raw Data
 
-## Complete Workflow
+Raw data can be downloaded here:
 
-This section demonstrates the full pipeline using the provided toy_example dataset.
+```text
+https://drive.google.com/drive/folders/1lnJ813-QiMho3duqLKqjTkpXBqkL43NU?usp=sharing
+```
 
-### Step 1: Generate Pre-trained Embeddings
+### 2. Generate Pre-trained Embeddings & Graphs
 
-These scripts are used to process raw protein and ligand files into the necessary input features (embeddings and graphs).
+This stage converts raw protein/ligand files into required model inputs (embeddings + graphs).
 
-> **Note:**  
-> Before running the embedding generation scripts, you need to download the required pre-trained weights for the feature extractors (e.g., ESM, GearNet, Molformer, GraphMVP) from their respective official sources. Please follow the instructions provided by each pre-trained model to obtain and place the weights appropriately.
+#### Pre-trained weights required
 
-First, navigate to the processing directory:
+Before running the embedding generation scripts, please download the required pre-trained weights from the official sources and place them according to each project’s instructions:
+
+```text
+ESM:       https://github.com/facebookresearch/esm
+GearNet:   https://github.com/DeepGraphLearning/GearNet
+Molformer: https://github.com/IBM/molformer
+GraphMVP:  https://github.com/chao1224/GraphMVP
+```
+
+#### Run preprocessing
+
+Go to the preprocessing directory:
 
 ```bash
 cd get_pretrain_embedding
 ```
 
-The toy_example for this preprocessing stage is located at `get_pretrain_embedding/toy_example`.
-Run the following scripts to generate the required features.
+##### Toy example (quick start)
 
-**Generate ESM Embeddings:**
+A small toy dataset is provided at:
 
+- `get_pretrain_embedding/toy_example`
+
+This is intended for quickly testing that the preprocessing + training + prediction pipeline works correctly.
+
+Run the scripts below to generate features:
+
+**Generate ESM Embeddings**
 ```bash
 python -W ignore esm_emb.py
 ```
 
-**Generate GearNet Embeddings:**
-
+**Generate GearNet Embeddings**
 ```bash
 python -W ignore gearnet_emb.py
 ```
 
-**Generate Molformer Embeddings:**
-
+**Generate Molformer Embeddings**
 ```bash
 python -W ignore molformer_emb.py
 ```
 
-**Generate GraphMVP Embeddings:**
-
+**Generate GraphMVP Embeddings**
 ```bash
 python -W ignore graphmvp_extrator.py
 ```
 
-**Generate Protein-Ligand Interaction Graph (PyG format):**
-
+**Generate Protein–Ligand Interaction Graph (PyG format)**
 ```bash
 python -W ignore graph_pyg.py
 ```
 
-After running these scripts, remember to return to the root directory:
+Return to the root directory after preprocessing:
 
 ```bash
 cd ..
 ```
 
+##### Full dataset processing (all files)
+
+In addition to `toy_example`, the preprocessing scripts are designed to process **the entire dataset (all files)** as long as you point the scripts to the full raw-data directory.
+
+Because the **full processed outputs are very large**, we do not bundle them in this repository. Please run the same preprocessing pipeline on the full dataset locally (and adjust file paths inside the scripts when necessary).
+
+### Resource Notes
+
+- Full preprocessing typically takes **~2 hours**
+- It will require **~55 GB** of free disk space for generated intermediate files and outputs  
+  (Actual time/disk usage may vary depending on hardware and filesystem performance.)
+
 ---
 
-### Step 2: Intra-modal Alignment Training
+## Model Weights (Reproducing Results)
 
-This stage trains the intra-molecular alignment model of protein and ligand.
+We provide model weights to help Reproducing the reported results without retraining from scratch. Download link:
+
+```text
+https://drive.google.com/drive/folders/1zGTSD1LKtQ8glExy5uD6x_28_ugtl90N?usp=drive_link
+```
+
+After downloading, place the checkpoints under the corresponding checkpoint directory (e.g., `checkpoint/align_model/` and/or `checkpoint/save_model/`) and run prediction:
+
+```bash
+python -W ignore pred.py \
+    --load_model_name <checkpoint_name> \
+    --dataset toy
+```
+
+> Note: Please ensure the checkpoint filenames / folder structure match the code’s expected loading paths.
+
+---
+
+## Training & Inference
+
+### Step 1: Intra-modal Alignment Training
+
+This stage trains the intra-molecular alignment modules for protein pocket and ligand.
 
 #### Train Protein Alignment Module
 
@@ -129,13 +188,15 @@ CUDA_VISIBLE_DEVICES=0 python -W ignore main.py \
     --save_model 1
 ```
 
-The resulting aligned models will be saved in the `checkpoint/align_model/` folder.
+Aligned models will be saved to:
+
+- `checkpoint/align_model/`
 
 ---
 
-### Step 3: Full Model Training
+### Step 2: Full Model Training
 
-This command trains the final AlignNet model, loading the pre-trained alignment modules from the previous step.
+Train the final AlignNet model (loading alignment modules from Step 1):
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python -W ignore main.py \
@@ -156,13 +217,15 @@ CUDA_VISIBLE_DEVICES=0 python -W ignore main.py \
     --log 1
 ```
 
-The final model checkpoints will be saved in the `checkpoint/save_model/` folder.
+Checkpoints will be saved to:
+
+- `checkpoint/save_model/`
 
 ---
 
-### Step 4: Prediction
+### Step 3: Prediction
 
-To predict binding affinities and reproduce our results on the toy dataset, use the following script.
+To predict binding affinities and reproduce results on the toy dataset:
 
 ```bash
 python -W ignore pred.py \
@@ -172,28 +235,26 @@ python -W ignore pred.py \
 
 ---
 
-**Note on Model Weights:**  
-The alignment weights and the final trained weights for our AlignNet model will be made fully public and available for download upon the publication of our paper. The checkpoints you generate during training will be saved locally in the `checkpoint/` directory.
+## Training on Your Own Data
+
+1. **Prepare data format**  
+   Organize your protein–ligand complexes similarly to `toy_example/` (typically protein PDB + ligand MOL2/SDF).
+
+2. **Generate embeddings & graphs**  
+   - Place your raw data under a new folder (e.g., `get_pretrain_embedding/my_dataset`)
+   - Update the data paths inside scripts in `get_pretrain_embedding/`
+   - Run the preprocessing scripts in the same order as above
+
+3. **Train**  
+   - Change `--dataset toy` to your dataset name in training commands
+   - Adjust hyperparameters (`--batch_size`, `--learn_rate`, etc.) if needed
+
+4. **Predict**  
+   - Set `--dataset` to your dataset name
+   - Set `--load_model_name` to your trained checkpoint name
 
 ---
 
-## Training & Prediction on Your Own Data
+## Contact
 
-To use your own dataset, please follow this general guide:
-
-1. **Format Your Data:**
-   Structure your dataset of protein-ligand complexes similar to the toy_example. You will typically need **PDB files for proteins** and **MOL2/SDF files for ligands**.
-
-2. **Generate Embeddings:**
-   - Place your data in a new folder (e.g., `get_pretrain_embedding/my_dataset`).
-   - Modify the paths inside the scripts in the `get_pretrain_embedding/` directory to point to your data.
-   - Run the scripts in Step 1 to generate all necessary features.
-
-3. **Train the Model:**
-   - Modify the training scripts in Step 2 and Step 3 by changing the `--dataset` argument from `toy` to the name of your dataset.
-   - Adjust hyperparameters like `--batch_size`, `--learn_rate`, etc., as needed.
-
-4. **Run Prediction:**
-   - Modify the prediction script in Step 4 by changing the `--dataset` argument to your dataset's name and ensuring the `--load_model_name` points to your trained checkpoint.
-
----
+If you have questions or issues, please open a GitHub Issue in this repository.

@@ -170,5 +170,6 @@ if __name__ == "__main__":
     pocket_path = "toy_example/demo_pocket.pdb"
     graph = mols2graphs(ligand_path, pocket_path, 1.0, dis_threshold=5.)
     torch.save(graph, "graph.pyg")
+    
     # get_graph_dataset()
 
