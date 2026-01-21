@@ -19,12 +19,13 @@ This repository provides the official implementation of **AlignNet**, including:
   - [1. Download Raw Data](#1-download-raw-data)
   - [2. Generate Pre-trained Embeddings & Graphs](#2-generate-pre-trained-embeddings--graphs)
   - [Resource Notes](#resource-notes)
-- [Pretrained Checkpoints (Reproducing Results)](#pretrained-checkpoints-reproducing-results)
+- [Model Weights (Reproducing Results)](#model-weights-reproducing-results)
 - [Training & Inference](#training--inference)
   - [Step 1: Intra-modal Alignment Training](#step-1-intra-modal-alignment-training)
   - [Step 2: Full Model Training](#step-2-full-model-training)
   - [Step 3: Prediction](#step-3-prediction)
 - [Training on Your Own Data](#training-on-your-own-data)
+- [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
 ---
