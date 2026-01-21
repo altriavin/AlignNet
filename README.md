@@ -256,11 +256,8 @@ python -W ignore pred.py \
 ---
 
 ## Acknowledgements
-This project builds upon state-of-the-art architectures including [ESM2](https://github.com/facebookresearch/esm), [GearNet](https://github.com/DeepGraphLearning/GearNet), [Molformer](https://github.com/IBM/molformer), and [GraphMVP](https://github.com/chao1224/GraphMVP). We gratefully acknowledge the contributions from the respective developers and the research community that made these advancements possible.
-
-
-
+This project builds upon state-of-the-art architectures including [ESM2](https://github.com/facebookresearch/esm), [GearNet](https://github.com/DeepGraphLearning/GearNet), [Molformer](https://github.com/IBM/molformer), [GraphMVP](https://github.com/chao1224/GraphMVP), and [GIGN](https://github.com/guaguabujianle/GIGN). We gratefully acknowledge the contributions from the respective developers and the research community that made these advancements possible.
 
 ## Contact
 
-If you have questions or issues, please open a GitHub Issue in this repository.
+If you have any questions, feel free to contact me by email: vinaltria@csu.edu.cn
