@@ -1,6 +1,6 @@
 # AlignNet
 
-## AlignNet: Enhancing Protein–Ligand Binding Affinity Prediction through Hierarchical Multi-modal Alignment
+## Hierarchical Molecular Alignment for Structure-Agnostic Protein–Ligand Binding Affinity Prediction
 
 This repository provides the official implementation of **AlignNet**, including:
 
@@ -66,7 +66,7 @@ This stage converts raw protein/ligand files into required model inputs (embeddi
 Before running the embedding generation scripts, please download the required pre-trained weights from the official sources and place them according to each project’s instructions:
 
 ```text
-ESM:       https://github.com/facebookresearch/esm
+ESM2:       https://github.com/facebookresearch/esm
 GearNet:   https://github.com/DeepGraphLearning/GearNet
 Molformer: https://github.com/IBM/molformer
 GraphMVP:  https://github.com/chao1224/GraphMVP
@@ -254,6 +254,12 @@ python -W ignore pred.py \
    - Set `--load_model_name` to your trained checkpoint name
 
 ---
+
+## Acknowledgements
+This project builds upon state-of-the-art architectures including [ESM2](https://github.com/facebookresearch/esm), [GearNet](https://github.com/DeepGraphLearning/GearNet), [Molformer](https://github.com/IBM/molformer), and [GraphMVP](https://github.com/chao1224/GraphMVP). We gratefully acknowledge the contributions from the respective developers and the research community that made these advancements possible.
+
+
+
 
 ## Contact
 
