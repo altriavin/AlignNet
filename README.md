@@ -121,7 +121,7 @@ Return to the root directory after preprocessing:
 cd ..
 ```
 
-##### Full dataset processing (all files)
+#### Full dataset processing (all files)
 
 In addition to `toy_example`, the preprocessing scripts are designed to process **the entire dataset (all files)** as long as you point the scripts to the full raw-data directory.
 
