@@ -2,3 +2,4 @@ dataset
 test.py
 __pycache__
 README.md.bak
+.gitignore
