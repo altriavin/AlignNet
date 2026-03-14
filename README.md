@@ -1,6 +1,6 @@
 # AlignNet
 
-## Hierarchical Molecular Alignment for Structure-Agnostic Protein–Ligand Binding Affinity Prediction
+## Structure-Agnostic Protein–Ligand Binding Affinity Prediction via Hierarchical Representation Alignment
 
 This repository provides the official implementation of **AlignNet**, including:
 
